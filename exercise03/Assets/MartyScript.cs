@@ -6,6 +6,11 @@ public class MartyScript : MonoBehaviour
 {
     float moveSpeed = 5f;
     float rotateSpeed = 75f;
+    float beetEat = 0f;
+    float launchForce = 2000f;
+    float pineEat = 0f;
+    public CapsuleCollider cc;
+    public Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +26,16 @@ public class MartyScript : MonoBehaviour
 
         gameObject.transform.Translate(gameObject.transform.forward * Time.deltaTime * moveSpeed * vAxis, Space.World);
         gameObject.transform.Rotate(0, rotateSpeed * Time.deltaTime * hAxis, 0);
-        
+        if (beetEat == 7f)
+        {
+            rb.useGravity = false;
+            rb.AddForce(gameObject.transform.up * launchForce);
+
+        }
+        if (pineEat == 4f)
+        {
+            cc.isTrigger = true;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -30,6 +44,15 @@ public class MartyScript : MonoBehaviour
         if (other.CompareTag("beet"))
         {
             Destroy(other.gameObject);
+            moveSpeed = moveSpeed + 2f;
+            beetEat = beetEat + 1f;
+        }
+
+        if (other.CompareTag("pine"))
+        {
+            Destroy(other.gameObject);
+            moveSpeed = moveSpeed - 2f;
+            pineEat = pineEat + 1f;
         }
     }
 

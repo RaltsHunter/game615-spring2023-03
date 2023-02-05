@@ -23,4 +23,14 @@ public class MartyScript : MonoBehaviour
         gameObject.transform.Rotate(0, rotateSpeed * Time.deltaTime * hAxis, 0);
         
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
+        if (other.CompareTag("beet"))
+        {
+            Destroy(other.gameObject);
+        }
+    }
+
 }
